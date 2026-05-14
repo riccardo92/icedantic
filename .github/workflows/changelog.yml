@@ -1,0 +1,38 @@
+name: Bump version, tag, generate changelog and merge back to dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  changelog:
+    if: "!contains(github.event.head_commit.message, 'release')"
+    runs-on: ubuntu-latest
+    name: "Create changelog with commitizen"
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+      - name: Run commitizen
+        run: |
+          uv venv
+          uv add commitizen
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          .venv/bin/cz changelog
+          git add CHANGELOG.md
+          git commit -m "docs: next release updates" || echo "Nothing to be commited"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: dev
