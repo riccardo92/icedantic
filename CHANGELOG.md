@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fix
+
+- iceberg types should now specified as strings; added exception for unknown types
+
 ## 0.0.2 (2026-05-15)
 
 ### Fix
