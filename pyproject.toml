@@ -1,6 +1,6 @@
 [project]
 name = "icedantic"
-version = "0.0.2"
+version = "0.0.3"
 description = "A package that integrates with Pydantic to be able to export Apache Iceberg table schemas."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -39,7 +39,7 @@ pythonpath = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.0.2"
+version = "0.0.3"
 tag_format = "$version"
 changelog_incremental = true
 update_changelog_on_bump = true
